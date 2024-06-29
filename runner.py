@@ -40,7 +40,7 @@ def parse_simulation_statistics(input_text, params):
         pattern = rf"^{param}\s+(\S+)"
         match = re.search(pattern, input_text, re.MULTILINE)
         if match:
-            results[param] = match.group(1)
+            results[param] = round(float(match.group(1)), 4)
         else:
             results[param] = None
     return results
@@ -80,7 +80,7 @@ def run_test(testBench):
             plt.plot(policy_list, res_transpose[i], marker='o')
             plt.title(parameter_list[i - 2])
 
-        plt.subplots_adjust(wspace=0.5, hspace=0.5)
+        plt.subplots_adjust(wspace=0.75, hspace=0.75)
         plt.suptitle(testBench)
         plt.savefig(testBench + ".jpg")
         plt.clf()  # Clear the current figure for the next plot
@@ -92,12 +92,12 @@ testBench_list =["ben2"]
 policy_list = ["OPTRP", "LRURP", "LFURP", "RandomRP" , "FIFORP"]
 parameter_list = [
     "simSeconds",
-    "simFreq", 
+    "simFreq",
     "simInsts",
     "simOps",
-    "system.l2.overallMissRate::cpu.inst",
-    "system.l2.overallMissRate::cpu.data",
-    "system.l2.overallMissRate::total"
+    "l2MissRateCpuI",
+    "l2MissRateCpuD",
+    "l2MissRateTotal"
 ]
 filename = "simulate_result.csv"
 
@@ -117,4 +117,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
